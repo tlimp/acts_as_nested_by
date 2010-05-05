@@ -5,13 +5,19 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "acts_as_nested_by"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Add a acts_as_nested_by :nesting_model class method to ActiveRecord::Base models}
+    gem.description = %Q{
+      The acts_as_nested_by class method add 3 instance methods to the model.
+      nested_by_nesting_model=(flag) sets the nesting_model 
+      nested_by_nesting_model returns true if nested_by nesting_model
+      nested_by_nesting_model? alias for nested_by_nesting_model
+      }
     gem.email = "thomas.limp@valiton.com"
     gem.homepage = "http://github.com/tehael/acts_as_nested_by"
     gem.authors = ["Thomas Limp"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.add_development_dependency "shoulda", ">= 0"
+    gem.add_development_dependency "sqlite3-ruby", ">= 0"
+    gem.add_dependency "activerecord"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
