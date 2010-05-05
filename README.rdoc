@@ -5,16 +5,16 @@
 == Use case example
 Since the rails-way of handling referential integrity is to code the logic into you your model, without using database dependent foreign key constraints, you might come across situations like this.
 
-class Foo < ActiveRecord
-  has_many :bars
-  validates_associated :bars
-  accepts_nested_attributes_for :bars
-end
+  class Foo < ActiveRecord
+    has_many :bars
+    validates_associated :bars
+    accepts_nested_attributes_for :bars
+  end
 
-class Bar < ActiveRecord
-  belongs_to :foo
-  validates_presence_of :foo
-end
+  class Bar < ActiveRecord
+    belongs_to :foo
+    validates_presence_of :foo
+  end
 
 Using validates_presence_of :foo instead of :foo_id ensures that not only a :foo_id was given but a Foo object existst in the :foos table.
 
@@ -22,11 +22,11 @@ But on creation of a Foo with nested Bars in on step produces a kind of dead loo
 Using an :unless => :new_record? conditions with the validations might help, but it can but those valdation would also be skipped, if the Bars were not to be created in a nested form.
 
 To handle this acts_as_nested_by comes in handy.
-class Bar < ActiveRecord
-  belongs_to :foo
-  acts_as_nested_by :foo
-  validates_presence_of :foo, :unless => :nested_by_foo?
-end
+  class Bar < ActiveRecord
+    belongs_to :foo
+    acts_as_nested_by :foo
+    validates_presence_of :foo, :unless => :nested_by_foo?
+  end
 
 Now just pass a parameter (with a hidden form parameter, or in the controller) :nested_by_foo => true when creating Bars nested in a Foo. If the Foo ist valid? it can be saved and the nested Bars will be auto saved and consistency is assured. ;)
 
