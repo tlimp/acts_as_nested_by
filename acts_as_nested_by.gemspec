@@ -5,18 +5,18 @@
 
 Gem::Specification.new do |s|
   s.name = %q{acts_as_nested_by}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Thomas Limp"]
-  s.date = %q{2010-05-05}
+  s.date = %q{2010-05-06}
   s.description = %q{
       The acts_as_nested_by class method add 3 instance methods to the model.
       nested_by_nesting_model=(flag) sets the nesting_model 
       nested_by_nesting_model returns true if nested_by nesting_model
       nested_by_nesting_model? alias for nested_by_nesting_model
       }
-  s.email = %q{thomas.limp@valiton.com}
+  s.email = %q{thomas.limp@gmx.com}
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "acts_as_nested_by.gemspec",
+     "init.rb",
      "lib/acts_as_nested_by.rb",
      "test/helper.rb",
      "test/test_acts_as_nested_by.rb"
@@ -36,7 +37,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/tehael/acts_as_nested_by}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6.1}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Add a acts_as_nested_by :nesting_model class method to ActiveRecord::Base models}
   s.test_files = [
     "test/helper.rb",
@@ -47,7 +48,7 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<sqlite3-ruby>, [">= 0"])
       s.add_runtime_dependency(%q<activerecord>, [">= 0"])
