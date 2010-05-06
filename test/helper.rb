@@ -14,7 +14,7 @@ class Test::Unit::TestCase
   def self.db_setup    
     @dbfile = File.join(File.dirname(__FILE__),"test.sqlite3")
     ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database  => @dbfile)
-    ActiveRecord::Migration.create_table :foos
+    ActiveRecord::Migration.create_table :foos do end
     ActiveRecord::Migration.create_table :bars do |t| t.references :foo end
   end
   
