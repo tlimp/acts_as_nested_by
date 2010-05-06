@@ -1,41 +1,55 @@
-= acts_as_nested_by
+= ActsAsNestedBy
 
-"acts_as_nested_by" is/will be a simple counterpart for rails' "accepts_attribute_for".
+'acts_as_nested_by' is/will be a simple counterpart for ActiveRecord::NestedAttributes 'accepts_attribute_for'.
+
+== Installation
+
+* as gem
+    $ sudo gem install acts_as_nested_by
+* or as plugin in your rails app
+    $ ./script/plugin/install git://github.com/tehael/acts_as_nested_by.git # rails 2.3.x
+    $ rails plugin install git://github.com/tehael/acts_as_nested_by.git # rails 3.0.x
 
 == Use case example
-Since the rails-way of handling referential integrity is to code the logic into you your model, without using database dependent foreign key constraints, you might come across situations like this.
 
-  class Foo < ActiveRecord
+Since the rails-way of handling referential integrity is to code the logic into you model without using database level foreign key constraints, you might produce code like this.
+
+  class Foo < ActiveRecord::Base
     has_many :bars
     validates_associated :bars
     accepts_nested_attributes_for :bars
   end
 
-  class Bar < ActiveRecord
+  class Bar < ActiveRecord::Base
     belongs_to :foo
     validates_presence_of :foo
   end
 
-Using validates_presence_of :foo instead of :foo_id ensures that not only a :foo_id was given but a Foo object existst in the :foos table.
+Using 'validates_presence_of :foo' instead of 'validates_presence_of :foo_id' ensures that not only a ':foo_id' was given but a Foo object existst in the :foos table.
 
-But on creation of a Foo with nested Bars in on step produces a kind of dead look, since the :foo_id for the Bars is not available until the Foo ist saved, and the validates_presence_of :bars produces an error in the Bars, no :foo_id, no Foo in the :foos table. And because the Foo :validates_associated :bars it cannot be saved.
-Using an :unless => :new_record? conditions with the validations might help, but it can but those valdation would also be skipped, if the Bars were not to be created in a nested form.
+But on creation of a Foo with nested Bars in one step produces a dead look, since the ':foo_id' for the Bars is not available until the Foo is saved, and the 'validates_presence_of :foo' therefore produces an error in the Bars invalidating them, no ':foo_id' no 'Foo' in the ':foos' table. And because the 'Foo' ':validates_associated :bars' it cannot be saved.
+Using an ':unless => :new_record?' condition with the ':validates_presence_of :foo' might help, but the validation is also skipped, if a 'Bar' is not created in a nested way.
 
-To handle this acts_as_nested_by comes in handy.
-  class Bar < ActiveRecord
+To handle this 'acts_as_nested_by' comes in handy.
+
+  class Bar < ActiveRecord::Base
     belongs_to :foo
     acts_as_nested_by :foo
     validates_presence_of :foo, :unless => :nested_by_foo?
   end
 
-Now just pass a parameter (with a hidden form parameter, or in the controller) :nested_by_foo => true when creating Bars nested in a Foo. If the Foo ist valid? it can be saved and the nested Bars will be auto saved and consistency is assured. ;)
+For now just pass a parameter (with a hidden form parameter) ':nested_by_foo => true' when creating 'Bars' nested in a 'Foo'. If the 'Foo' itsef is 'valid?' it can be saved, the nested 'Bars' will be auto saved and consistency is assured. ;)
 
 == Nota bene
-When using :attr_accessible, :attr_proteced and a hidden form parameter you should add :nested_by_foo to the mass-assignable attributes.
+
+* The association must be established before 'calling acts_as_nested_by :foo', so it must be called after 'belongs_to :foo'. An ArgumentError will be raised if the association is not yet established.
+* By now the association must be defined by 'belongs_to' macro, otherwise an ArgumentError will be raised.
+* When using ':attr_accessible', ':attr_proteced' and a hidden form parameter you should add ':nested_by_foo' to the mass-assignable attributes.
 
 == Next steps/known issues
 
-Since the setting of :nested_by_foo via mass assignement could be exploited to create inconsitent entries, the build/create methods provide by the association macros should set the :nested_by_foo internaly and the generated ActiveRecord::Base#nested_by_foo should be defined protected.
+* Setting of ':nested_by_other' via mass assignement or by calling 'nested_by_other = true' could be exploited to create inconsistent entries.
+* Therefore the mass assignment setter method provided by 'ActiveRecord#accepts_nested_attributes_for' should set the ':nested_by_other' flag internaly and 'ActiveRecord::Base#nested_by_other' should be defined protected.
 
 == Note on Patches/Pull Requests
  
