@@ -12,7 +12,7 @@ begin
       nested_by_nesting_model returns true if nested_by nesting_model
       nested_by_nesting_model? alias for nested_by_nesting_model
       }
-    gem.email = "thomas.limp@valiton.com"
+    gem.email = "thomas.limp@gmx.com"
     gem.homepage = "http://github.com/tehael/acts_as_nested_by"
     gem.authors = ["Thomas Limp"]
     gem.add_development_dependency "shoulda", ">= 0"
