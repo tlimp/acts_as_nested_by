@@ -8,11 +8,11 @@ begin
     gem.summary = %Q{Add a acts_as_nested_by :nesting_model class method to ActiveRecord::Base models}
     gem.description = %Q{
       The acts_as_nested_by class method add 3 instance methods to the model.
-      nested_by_nesting_model=(flag) sets the nesting_model 
+      nested_by_nesting_model=(flag) sets the nesting_model
       nested_by_nesting_model returns true if nested_by nesting_model
       nested_by_nesting_model? alias for nested_by_nesting_model
       }
-    gem.email = "thomas.limp@gmx.com"
+    gem.email = "thomas@limpirium.net"
     gem.homepage = "http://github.com/tehael/acts_as_nested_by"
     gem.authors = ["Thomas Limp"]
     gem.add_development_dependency "shoulda", ">= 0"
