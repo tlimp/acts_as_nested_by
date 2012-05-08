@@ -2,7 +2,7 @@ module ActsAsNestedBy #:nodoc:
   def self.included(base) #:nodoc:
     base.send :extend, ClassMethods
   end
-  
+
   module ClassMethods
     # Generates instance methods for setting and getting a 'nested_by_other' flag for each ':other' in association_names
     # * Example:
@@ -11,7 +11,7 @@ module ActsAsNestedBy #:nodoc:
     #       acts_as_nested_by :other
     #     end
     #
-    #   generates methods 
+    #   generates methods
     #     Bar#nested_by_other=
     #     Bar#nested_by_other
     #     Bar#nested_by_other?
@@ -26,11 +26,11 @@ module ActsAsNestedBy #:nodoc:
               def nested_by_#{association_name}=(nested_by_#{association_name})
                 @nested_by_#{association_name} = nested_by_#{association_name}
               end
-            
+
               def nested_by_#{association_name}
-                @nested_by_#{association_name} = @nested_by_#{association_name}.nil? ? false : true
+                @nested_by_#{association_name} = !@nested_by_#{association_name} ? false : true
               end
-            
+
               def nested_by_#{association_name}?
                 nested_by_#{association_name}
               end
@@ -40,7 +40,7 @@ module ActsAsNestedBy #:nodoc:
           end
         else
           raise ArgumentError, "No association found for name `#{association_name}'. Has it been defined yet?"
-        end 
+        end
       end
     end
   end
